@@ -5,11 +5,10 @@ from os import listdir
 from words20k import words20k
 
 
-def text_analyse(textfile, look_for_outliner=False, outliner_data=words20k):
+def text_analyse(textfile):
     result = {}
     result['word_count'] = 0
     result['word_counter'] = {}
-    result['outliners'] = set()
     with open(textfile, encoding='utf-8') as fin:
         #'*** START' '*** END' is how Gutenberg project indicates the boundary of actual contents in plain text
         while True:
@@ -33,9 +32,6 @@ def text_analyse(textfile, look_for_outliner=False, outliner_data=words20k):
                     if word:
                         result['word_count'] += 1
                         result['word_counter'][word] = result['word_counter'].get(word, 0) + 1
-                        if look_for_outliner == True:
-                            if word not in outliner_data:
-                                result['outliners'].add(word)
                             
         result['frequency_rank'] = dict(sorted(result['word_counter'].items(), key=lambda item:item[1], reverse=True))
         result['unique_count'] = len(result['word_counter'])
@@ -61,9 +57,7 @@ def main():
             json_output={
                 title: {'Word Count': analysis['word_count'],
                 'Unique Word Count': analysis['unique_count'],
-                'Frequency Count': analysis['frequency_rank'],
-                'Number of Words Not Found in the 20k Word List': len(analysis['outliners']),
-                'Words Not Found in the 20k Word List': list(analysis['outliners'])}
+                'Frequency Count': analysis['frequency_rank']}
             }
             json.dump(json_output, f, ensure_ascii=False, indent=4)
     else:
@@ -73,8 +67,7 @@ def main():
             print()
             print('{0:<20} {1:<10} {2}'.format('Word', 'Count', 'Percentage'))
             [print('{0:<20} {1:<10} {2:.4%}'.format(word, count, count/analysis['word_count'])) for word, count in analysis['frequency_rank'].items()]
-            print()
-            print('Words not in the most frequent 20k English words:')
-            [print(x) for x in analysis['outliners']]
+
+
 if __name__=='__main__':
     main()
