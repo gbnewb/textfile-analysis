@@ -2,7 +2,6 @@ import sys
 import re
 import json
 from os import listdir
-from words20k import words20k
 
 
 def text_analyse(textfile):
