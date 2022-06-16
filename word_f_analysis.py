@@ -32,7 +32,8 @@ def text_analyse(textfile):
                         result['word_count'] += 1
                         result['word_counter'][word] = result['word_counter'].get(word, 0) + 1
                             
-        result['frequency_rank'] = dict(sorted(result['word_counter'].items(), key=lambda item:item[1], reverse=True))
+        result['frequency_rank'] = dict(sorted(result['word_counter'].items(),
+                                               key=lambda item:item[1], reverse=True))
         result['unique_count'] = len(result['word_counter'])
     return result
 
@@ -53,7 +54,7 @@ def main():
     
     if use_json.lower() == 'y':
         with open(f'output/{out_filename}.json', 'w', encoding='utf-8') as f:
-            json_output={
+            json_output = {
                 title: {'Word Count': analysis['word_count'],
                 'Unique Word Count': analysis['unique_count'],
                 'Frequency Count': analysis['frequency_rank']}
@@ -62,11 +63,14 @@ def main():
     else:
         with open(f'output/{out_filename}.txt', 'w', encoding='utf-8') as sys.stdout:
             print('File:', selection[selected].replace('.txt', ''))
-            print(f'Word Count: {analysis["word_count"]}', f'Unique Word Count: {analysis["unique_count"]}', sep='\n')
+            print(f'Word Count: {analysis["word_count"]}', 
+                  f'Unique Word Count: {analysis["unique_count"]}', sep='\n')
             print()
             print('{0:<20} {1:<10} {2}'.format('Word', 'Count', 'Percentage'))
-            [print('{0:<20} {1:<10} {2:.4%}'.format(word, count, count/analysis['word_count'])) for word, count in analysis['frequency_rank'].items()]
+            for word, count in analysis['frequency_rank'].items():
+                print('{0:<20} {1:<10} {2:.4%}'.format(
+                    word, count, count/analysis['word_count']))
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     main()
