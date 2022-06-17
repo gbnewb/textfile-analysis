@@ -27,15 +27,15 @@ def text_analyse(textfile):
                 line = line.replace('--', ' ')
                 
                 for word in line.split():
-                    word = word.lower()
                     if word:
+                        word = word.lower()
                         word_count += 1
                         word_counter[word] = word_counter.get(word, 0) + 1
         
         result['word_count'] = word_count
         result['word_counter'] = word_counter                    
         result['frequency_rank'] = dict(sorted(word_counter.items(),
-                                               key=lambda item:item[1], reverse=True))
+                                        key=lambda item:item[1], reverse=True))
         result['unique_count'] = len(word_counter)
     return result
 
