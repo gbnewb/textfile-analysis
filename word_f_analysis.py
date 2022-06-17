@@ -64,24 +64,19 @@ def main():
     
     else:
         with open(f'output/{out_filename}.txt', 'w', encoding='utf-8') as f:
-            text_output = (
-                            'Title: ' + title + '\n'
-                            + f'Word Count: {analysis["word_count"]}\n'
-                            + f'Unique Word Count: {analysis["unique_count"]}\n'
-                            + '\n'
-                            + '{0:<20} {1:<10} {2}'
-                              .format('Word', 'Count', 'Percentage') + '\n'
-                            + '\n'.join(
-                            [
-                              '{0:<20} {1:<10} {2:.4%}'
-                              .format(word, count,
-                                      count/analysis['word_count'])
-                              for word, count
-                              in analysis['frequency_rank'].items()
-                            ]
-                            )
-                          )
-            print(text_output, file=f)
+            print(
+                'Title: ' + title,
+                f'Word Count: {analysis["word_count"]}',
+                f'Unique Word Count: {analysis["unique_count"]}\n',
+                '{0:<20} {1:<10} {2}'.format('Word', 'Count', 'Percentage'),
+                '\n'.join([
+                    '{0:<20} {1:<10} {2:.4%}'
+                    .format(word, count, count/analysis['word_count'])
+                    for word, count in analysis['frequency_rank'].items()
+                        ]
+                    ),
+                file=f, sep='\n'
+                )
 
 
 if __name__ == '__main__':
