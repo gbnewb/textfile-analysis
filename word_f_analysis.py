@@ -69,11 +69,10 @@ def main():
                 f'Word Count: {analysis["word_count"]}',
                 f'Unique Word Count: {analysis["unique_count"]}\n',
                 '{0:<20} {1:<10} {2}'.format('Word', 'Count', 'Percentage'),
-                '\n'.join([
+                '\n'.join(
                     '{0:<20} {1:<10} {2:.4%}'
                     .format(word, count, count/analysis['word_count'])
                     for word, count in analysis['frequency_rank'].items()
-                        ]
                     ),
                 file=f, sep='\n'
                 )
