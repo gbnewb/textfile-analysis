@@ -1,4 +1,3 @@
-import sys
 import re
 import json
 from os import listdir
@@ -45,8 +44,8 @@ def main():
     for f in listdir('text/'):
         if f.endswith('.txt'):
             selection.append(f)
-    for i, x in enumerate(selection):
-        print(f'{i}.', x.replace('.txt', ''))
+    for i, f in enumerate(selection):
+        print(f'{i}.', f.replace('.txt', ''))
     
     selected = int(input('Enter the file number: '))
     title = selection[selected].replace('.txt', '')
@@ -64,15 +63,19 @@ def main():
             json.dump(json_output, f, ensure_ascii=False, indent=4)
     
     else:
-        with open(f'output/{out_filename}.txt', 'w', encoding='utf-8') as sys.stdout:
-            print('File:', selection[selected].replace('.txt', ''))
-            print(f'Word Count: {analysis["word_count"]}')
-            print(f'Unique Word Count: {analysis["unique_count"]}')
-            print()
-            print('{0:<20} {1:<10} {2}'.format('Word', 'Count', 'Percentage'))
-            for word, count in analysis['frequency_rank'].items():
-                print('{0:<20} {1:<10} {2:.4%}'.format(
-                    word, count, count/analysis['word_count']))
+        with open(f'output/{out_filename}.txt', 'w', encoding='utf-8') as f:
+            text_output = (
+                            'Title: ' + title + '\n'
+                            + 'Word Count: ' + str(analysis['word_count']) + '\n'
+                            + 'Unique Word Count: ' + str(analysis['unique_count']) + '\n'
+                            + '\n'
+                            + '{0:<20} {1:<10} {2}'.format('Word', 'Count', 'Percentage') + '\n'
+                            + '\n'.join([
+                                '{0:<20} {1:<10} {2:.4%}'.format(word, count, count/analysis['word_count'])
+                                for word, count in analysis['frequency_rank'].items()
+                                ])
+                          )
+            print(text_output, file=f)
 
 
 if __name__ == '__main__':
