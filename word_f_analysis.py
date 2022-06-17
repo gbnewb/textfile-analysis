@@ -62,11 +62,12 @@ def main():
                 'Frequency Count': analysis['frequency_rank']}
             }
             json.dump(json_output, f, ensure_ascii=False, indent=4)
+    
     else:
         with open(f'output/{out_filename}.txt', 'w', encoding='utf-8') as sys.stdout:
             print('File:', selection[selected].replace('.txt', ''))
-            print(f'Word Count: {analysis["word_count"]}', 
-                  f'Unique Word Count: {analysis["unique_count"]}', sep='\n')
+            print(f'Word Count: {analysis["word_count"]}')
+            print(f'Unique Word Count: {analysis["unique_count"]}')
             print()
             print('{0:<20} {1:<10} {2}'.format('Word', 'Count', 'Percentage'))
             for word, count in analysis['frequency_rank'].items():
