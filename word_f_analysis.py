@@ -6,8 +6,8 @@ from os import listdir
 
 def text_analyse(textfile):
     result = {}
-    result['word_count'] = 0
-    result['word_counter'] = {}
+    word_count = 0
+    word_counter = {}
     with open(textfile, encoding='utf-8') as fin:
         #'*** START' '*** END' is how Gutenberg project indicates the boundary of actual contents in plain text
         while True:
@@ -29,12 +29,14 @@ def text_analyse(textfile):
                 for word in line.split():
                     word = word.lower()
                     if word:
-                        result['word_count'] += 1
-                        result['word_counter'][word] = result['word_counter'].get(word, 0) + 1
-                            
-        result['frequency_rank'] = dict(sorted(result['word_counter'].items(),
+                        word_count += 1
+                        word_counter[word] = word_counter.get(word, 0) + 1
+        
+        result['word_count'] = word_count
+        result['word_counter'] = word_counter                    
+        result['frequency_rank'] = dict(sorted(word_counter.items(),
                                                key=lambda item:item[1], reverse=True))
-        result['unique_count'] = len(result['word_counter'])
+        result['unique_count'] = len(word_counter)
     return result
 
 
