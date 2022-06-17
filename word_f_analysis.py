@@ -66,14 +66,20 @@ def main():
         with open(f'output/{out_filename}.txt', 'w', encoding='utf-8') as f:
             text_output = (
                             'Title: ' + title + '\n'
-                            + 'Word Count: ' + str(analysis['word_count']) + '\n'
-                            + 'Unique Word Count: ' + str(analysis['unique_count']) + '\n'
+                            + f'Word Count: {analysis["word_count"]}\n'
+                            + f'Unique Word Count: {analysis["unique_count"]}\n'
                             + '\n'
-                            + '{0:<20} {1:<10} {2}'.format('Word', 'Count', 'Percentage') + '\n'
-                            + '\n'.join([
-                                '{0:<20} {1:<10} {2:.4%}'.format(word, count, count/analysis['word_count'])
-                                for word, count in analysis['frequency_rank'].items()
-                                ])
+                            + '{0:<20} {1:<10} {2}'
+                              .format('Word', 'Count', 'Percentage') + '\n'
+                            + '\n'.join(
+                            [
+                              '{0:<20} {1:<10} {2:.4%}'
+                              .format(word, count,
+                                      count/analysis['word_count'])
+                              for word, count
+                              in analysis['frequency_rank'].items()
+                            ]
+                            )
                           )
             print(text_output, file=f)
 
